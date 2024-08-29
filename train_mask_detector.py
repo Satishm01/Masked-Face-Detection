@@ -111,7 +111,7 @@ for layer in baseModel.layers:
 
 # compile our model
 print("[INFO] compiling model...")
-opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
+opt = Adam(learning_rate=INIT_LR)
 model.compile(loss="binary_crossentropy", optimizer=opt,
 	metrics=["accuracy"])
 
@@ -133,8 +133,10 @@ predIdxs = model.predict(testX, batch_size=BS)
 predIdxs = np.argmax(predIdxs, axis=1)
 
 # show a nicely formatted classification report
-print(classification_report(testY.argmax(axis=1), predIdxs,
-	target_names=lb.classes_))
+# print(classification_report(testY.argmax(axis=1), predIdxs,
+# 	target_names=lb.classes_))
+
+print(classification_report(testY.argmax(axis=1), predIdxs, labels=[0, 1], target_names=lb.classes_))
 
 # serialize the model to disk
 print("[INFO] saving mask detector model...")
